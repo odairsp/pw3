@@ -62,6 +62,20 @@ Route::get('/conta/{numero1}/{numero2}/{operacao?}', function (int $numero1, int
 })->where(['numero1' => '[0-9]{1,10}', 'numero2' => '[0-9]{1,10}', 'operacao' => '[a-zA-Z]{4,13}'])->name('calculadora');
 
 
-Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = null, int $dia = null) {
-    return '';
-})->name('idade');
+Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $dia = 0) {
+
+
+    $dateStart = new DateTime("$ano-$mes-$dia");
+    $dateEnd = new DateTime('now');
+    $date = $dateEnd->diff($dateStart);
+    $idade = $date->y;
+
+    if ($dia == 0) {
+    } else if ($dia == 0 && $mes == 0) {
+    } else {
+        $idade;
+    }
+
+
+    return view('home/idade', ['idade'=>$idade]);
+})->where(['ano' => '[0-9]{4}', 'mes' => '[0-9]{1,2}', 'dia' => '[0-9]{1,2}'])->name('idade');
