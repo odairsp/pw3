@@ -18,16 +18,15 @@
 <body class="container justify-content-center align-items-center d-flex mt-5">
 
     @yield('content')
-    <div class="card" style="width: max-content;height: 10rem;">
+    <div class="card">
         <div class="card-body ">
             <h5 class="card-title">@yield('card-title')</h5>
-            <p class="card-text  mt-5">
-            <h6>@yield('card-text')</h6>
+            <p class="  mt-5">
+            <p>@yield('card-text')</p>
+
             </p>
         </div>
     </div>
-
-
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"

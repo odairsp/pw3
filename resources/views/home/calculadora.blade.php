@@ -1,18 +1,24 @@
 @extends('layouts/main')
-@section('title', 'Home')
+@section('card-title', 'Operações')
 
 
 
-
-@if (is_array($operacao))
-    @section('card-title', 'Operações')
-    @foreach ($operacao as $item)
-        @section('card-text', 'A ' . $item . ' de ' . $numero1 . ' e ' . $numero2 . ' é = ' . $resultado . '!')
-    @endif
-@endforeach
+@if (is_array($resultado))
+    @section('card-text')
+        @foreach ($resultado as $operacao => $result)
+            <h6>
+                A {{ mb_strtoupper($operacao, 'utf-8') }} de {{ $numero1 }} e {{ $numero2 }} é =
+                {{ $result }}!
+            </h6>
+        @endforeach
+    @endsection
+@elseif(strlen($text) > 1)
+    @section('card-title', 'Erro')
+    @section('card-text', $text)
 @else
-@section('card-title', strtoupper($operacao))
-@section('card-text', 'A ' . $operacao . ' de ' . $numero1 . ' e ' . $numero2 . ' é = ' . $resultado . '!')
+    @section('card-title', mb_strtoupper($operacao, 'utf-8'))
+    @section('card-text', 'A ' . $operacao . ' de ' . $numero1 . ' e ' . $numero2 . ' é = ' . $resultado . '!')
+
 @endif
 
 

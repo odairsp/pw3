@@ -19,37 +19,47 @@ Route::get('/hello/{nome}', function ($nome) {
 })->where('nome', '[a-zA-Z]{3,10}')->name('home');
 
 Route::get('/conta/{numero1}/{numero2}/{operacao?}', function (int $numero1, int $numero2, string $operacao = null) {
+    $text = '';
     $resultado  = 0;
-    $operacao = strtolower($operacao);
+    $operacao = mb_strtolower($operacao, 'utf-8');
     switch ($operacao) {
-
         case null:
-            $resultado=['soma'=>$numero1 + $numero2,'subtracao'=>$numero1 - $numero2,
-            'multiplicacao' => $numero1 * $numero2, 'divisao'=>$numero1 / $numero2 ];
+            if ($numero2 == 0) {
+                $resultado = [
+                    'soma' => $numero1 + $numero2, 'subtração' => $numero1 - $numero2,
+                    'multiplicação' => $numero1 * $numero2, 'divisão' => 'Não é possivel divisão por 0'
+                ];
+            } else {
+                $resultado = [
+                    'soma' => $numero1 + $numero2, 'subtração' => $numero1 - $numero2,
+                    'multiplicação' => $numero1 * $numero2, 'divisão' => $numero1 / $numero2
+                ];
+            }
+
             break;
         case "soma":
             $resultado = $numero1 + $numero2;
             break;
         case "subtracao":
             $resultado = $numero1 - $numero2;
+            $operacao = 'subtração';
             break;
         case "multiplicacao":
             $resultado = $numero1 * $numero2;
+            $operacao = 'multiplicação';
             break;
         case "divisao":
             $resultado = $numero1 / $numero2;
+            $operacao = 'divisão';
             break;
         default:
-            $resultado = 'Digite uma operação válida!<br>
-        ["soma", "subtração", "multiplicação", "divisão"]';
+            $text = 'Entre com uma operação válida! 
+        ["soma", "subtracao", "multiplicacao", "divisao"]';
             break;
     }
 
-    return view('home/calculadora', ['resultado' => $resultado, 'numero1' => $numero1, 'numero2' => $numero2, 'operacao' => $operacao]);
+    return view('home/calculadora', ['text' => $text, 'resultado' => $resultado, 'numero1' => $numero1, 'numero2' => $numero2, 'operacao' => $operacao]);
 })->where(['numero1' => '[0-9]{1,10}', 'numero2' => '[0-9]{1,10}', 'operacao' => '[a-zA-Z]{4,13}'])->name('calculadora');
-
-
-
 
 
 Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = null, int $dia = null) {
