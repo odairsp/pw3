@@ -67,15 +67,16 @@ Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $
 
     $dateStart = new DateTime("$ano-$mes-$dia");
     $dateEnd = new DateTime('now');
-    $date = $dateEnd->diff($dateStart);
-    $idade = $date->y;
+    $flagIdade = 1;
+    if (($dateStart->format('Y') >= $dateEnd->format('Y'))) {
 
-    if ($dia == 0) {
-    } else if ($dia == 0 && $mes == 0) {
-    } else {
-        $idade;
+        $flagIdade = 0;
     }
 
+    $date = $dateEnd->diff($dateStart);
+    $idade = $date;
 
-    return view('home/idade', ['idade'=>$idade]);
+
+
+    return view('home/idade', ['flagIdade' => $flagIdade, 'idade' => $idade, 'mes' => $mes, 'dia' => $dia]);
 })->where(['ano' => '[0-9]{4}', 'mes' => '[0-9]{1,2}', 'dia' => '[0-9]{1,2}'])->name('idade');
