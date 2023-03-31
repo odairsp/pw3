@@ -65,7 +65,6 @@ Route::get('/conta/{numero1}/{numero2}/{operacao?}', function (int $numero1, int
 
 Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $dia = 0) {
 
-
     $dateStart = new DateTime("$ano-$mes-$dia");
     $dateEnd = new DateTime('now');
     $flagIdade = 1;
@@ -77,10 +76,10 @@ Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $
     $date = $dateEnd->diff($dateStart);
     $idade = $date;
 
-
-
     return view('home/idade', ['flagIdade' => $flagIdade, 'idade' => $idade, 'mes' => $mes, 'dia' => $dia]);
 })->where(['ano' => '[0-9]{4}', 'mes' => '[0-9]{1,2}', 'dia' => '[0-9]{1,2}'])->name('idade');
+
+
 
 
 Route::get('/contas/{numero1}/{numero2}/{operacao?}', [ContasController::class, 'contas'])
