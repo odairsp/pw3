@@ -18,9 +18,8 @@ class ContasController extends Controller
             echo 'Divisão por 0 não existe!<br>';
         }
 
-        if($operacao != null){
-            
-            
+        if($operacao != null && $numero2 != 0){
+                 
             echo $operacao.' de ' .$numero1.' e '.$numero2.' = '.eval('return '.$numero1.$operacoes[$operacao].$numero2.';');
 
         }else{
