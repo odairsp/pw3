@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,3 +81,8 @@ Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $
 
     return view('home/idade', ['flagIdade' => $flagIdade, 'idade' => $idade, 'mes' => $mes, 'dia' => $dia]);
 })->where(['ano' => '[0-9]{4}', 'mes' => '[0-9]{1,2}', 'dia' => '[0-9]{1,2}'])->name('idade');
+
+
+Route::get('/contas/{numero1}/{numero2}/{operacao?}', [ContasController::class, 'contas'])
+->where(['numero1' => '[0-9]{1,10}', 'numero2' => '[0-9]{1,10}'])
+->whereIn('operacao', ['soma', 'subtracao', 'multiplicacao', 'divisao'])->name('contas');
