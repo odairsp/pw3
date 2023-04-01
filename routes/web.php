@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ContasController;
+use App\Http\Controllers\HelloController;
+use App\Http\Controllers\IdadeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,7 +64,6 @@ Route::get('/conta/{numero1}/{numero2}/{operacao?}', function (int $numero1, int
     return view('home/calculadora', ['text' => $text, 'resultado' => $resultado, 'numero1' => $numero1, 'numero2' => $numero2, 'operacao' => $operacao]);
 })->where(['numero1' => '[0-9]{1,10}', 'numero2' => '[0-9]{1,10}', 'operacao' => '[a-zA-Z]{4,13}'])->name('calculadora');
 
-
 Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $dia = 0) {
 
     $dateStart = new DateTime("$ano-$mes-$dia");
@@ -81,7 +82,12 @@ Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $
 
 
 
+Route::get('/hello2/{nome}', [HelloController::class, 'hello']);
+
+Route::get('/idade2/{ano}/{mes?}/{dia?}', [IdadeController::class, 'idade'])
+->where(['ano' => '[0-9]{4}', 'mes' => '[0-9]{1,2}', 'dia' => '[0-9]{1,2}'])
+->name('idade');
 
 Route::get('/contas/{numero1}/{numero2}/{operacao?}', [ContasController::class, 'contas'])
-->where(['numero1' => '[0-9]{1,10}', 'numero2' => '[0-9]{1,10}'])
-->whereIn('operacao', ['soma', 'subtracao', 'multiplicacao', 'divisao'])->name('contas');
+    ->where(['numero1' => '[0-9]{1,10}', 'numero2' => '[0-9]{1,10}'])
+    ->whereIn('operacao', ['soma', 'subtracao', 'multiplicacao', 'divisao'])->name('contas');
