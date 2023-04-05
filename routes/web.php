@@ -85,8 +85,8 @@ Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $
 Route::get('/hello2/{nome}', [HelloController::class, 'hello']);
 
 Route::get('/idade2/{ano}/{mes?}/{dia?}', [IdadeController::class, 'idade'])
-->where(['ano' => '[0-9]{4}', 'mes' => '[0-9]{1,2}', 'dia' => '[0-9]{1,2}'])
-->name('idade');
+    ->where(['ano' => '[0-9]{4}', 'mes' => '[0-9]{1,2}', 'dia' => '[0-9]{1,2}'])
+    ->name('idade');
 
 Route::get('/contas/{numero1}/{numero2}/{operacao?}', [ContasController::class, 'contas'])
     ->where(['numero1' => '[0-9]{1,10}', 'numero2' => '[0-9]{1,10}'])
