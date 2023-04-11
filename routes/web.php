@@ -74,7 +74,7 @@ Route::get('/idade/{ano}/{mes?}/{dia?}', function (int $ano, int $mes = 0, int $
         $flagIdade = 0;
     }
 
-    $date = $dateEnd->diff($dateStart);
+    $date = $dateEnd->diff($dateStart); 
     $idade = $date;
 
     return view('home/idade', ['flagIdade' => $flagIdade, 'idade' => $idade, 'mes' => $mes, 'dia' => $dia]);
